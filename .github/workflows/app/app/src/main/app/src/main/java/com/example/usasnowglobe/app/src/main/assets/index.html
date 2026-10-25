@@ -155,7 +155,15 @@ async function start(){
    .polygonSideColor(()=>"rgba(30,50,80,.9)")
    .polygonStrokeColor(()=>"rgba(35,53,77,.95)")
    .polygonLabel(f=>f.properties.name)
-   .onPolygonClick(f=>selectState(f.properties.name));
+   .onPolygonClick(f=>selectState(f.properties.name))
+.labelsData(features)
+.labelLat(f=>centroid(f)[0])
+.labelLng(f=>centroid(f)[1])
+.labelText(f=>f.properties.name)
+.labelSize(.35)
+.labelDotRadius(.025)
+.labelColor(()=>"rgba(255,255,255,.95)")
+.labelAltitude(.025);
 
   window.snowGlobe.pointOfView({lat:39,lng:-98,altitude:1.8});
   window.snowGlobe.controls().autoRotate=false;
