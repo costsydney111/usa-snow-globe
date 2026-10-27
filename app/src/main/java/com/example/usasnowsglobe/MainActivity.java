@@ -3,37 +3,37 @@ package com.example.usasnowsglobe;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.webkit.WebSettings;
 import android.graphics.Color;
-import android.view.Gravity;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.CENTER);
-        layout.setBackgroundColor(Color.rgb(12, 30, 58));
-        layout.setPadding(24, 24, 24, 24);
+        Window window = getWindow();
+        window.setStatusBarColor(Color.rgb(5, 17, 39));
+        window.setNavigationBarColor(Color.rgb(5, 17, 39));
+        window.getDecorView().setSystemUiVisibility(0);
 
-        TextView title = new TextView(this);
-        title.setText("❄️ USA Snow Globe 🇺🇸");
-        title.setTextColor(Color.WHITE);
-        title.setTextSize(28);
-        title.setGravity(Gravity.CENTER);
+        WebView webView = new WebView(this);
+        webView.setBackgroundColor(Color.rgb(5, 17, 39));
 
-        TextView message = new TextView(this);
-        message.setText("Welcome to the USA Snow Globe!\n\nYour snowy adventure starts here.");
-        message.setTextColor(Color.WHITE);
-        message.setTextSize(18);
-        message.setGravity(Gravity.CENTER);
-        message.setPadding(0, 32, 0, 0);
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAllowFileAccess(true);
+        settings.setMixedContentMode(
+            WebSettings.MIXED_CONTENT_NEVER_ALLOW
+        );
 
-        layout.addView(title);
-        layout.addView(message);
-        setContentView(layout);
+        webView.setWebViewClient(new WebViewClient());
+        setContentView(webView);
+        webView.loadUrl("file:///android_asset/index.html");
     }
 }
